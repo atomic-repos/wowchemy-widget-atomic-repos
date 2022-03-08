@@ -70,13 +70,18 @@
 {{ end }}
 
 {{ $columns := $st.Params.design.columns | default "2" }}
-
-<div class="col-12 {{if eq $columns "2"}}col-lg-8{{end}}">Hello World!
+<div class="section-heading col-12 mb-3 text-center">
+    {{ with $st.Title }}<h1 class="mb-0">{{ . | markdownify | emojify }}</h1>{{ end }}
+    {{ with $st.Params.subtitle }}<p class="mt-1">{{ . | markdownify | emojify }}</p>{{ end }}
+</div>
+<div class="col-12">
 
   {{ with $st.Content }}{{ . }}{{ end }}
 
   {{ range $index, $item := $query }}
-    {{ partial "functions/render_view" (dict "page" $st "item" . "view" ($st.Params.design.view | default "compact") "index" $index) }}
+  {{ if eq (mod $index 3) 0 }}<div class="row">{{ end }}
+  {{ partial "functions/render_view" (dict "page" $st "item" . "view" "repo" "index" $index) }}
+  {{ if eq (mod $index 3) 2 }}</div>{{ end }}
   {{end}}
 
   {{/* Archive link */}}
