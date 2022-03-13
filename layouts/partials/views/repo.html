@@ -1,13 +1,6 @@
 {{ $item := .item }}
 {{ $index := .index }}
-{{ $has_attachments := partial "functions/has_attachments" $item }}
-
 {{ $link := $item.RelPermalink }}
-{{ $target := "" }}
-{{ if $item.Params.external_link }}
-  {{ $link = $item.Params.external_link }}
-  {{ $target = "target=\"_blank\" rel=\"noopener\"" }}
-{{ end }}
 
 {{/* Get summary. */}}
 {{ $summary := "" }}
@@ -19,20 +12,9 @@
   {{ $summary = $item.Summary }}
 {{ end }}
 
-{{ $resource := ($item.Resources.ByType "image").GetMatch "*featured*" }}
-
-
-
-<div class="card col-4" style="margin-left: 10px; margin-right: 10px;">
-  {{ with $resource }}
-  {{ $image := .Resize "550x webp" }}
-  <a href="{{ $link }}" {{ $target | safeHTMLAttr }} class="card-image hover-overlay">
-    <img src="{{ $image.RelPermalink }}" height="{{ $image.Height }}" width="{{ $image.Width }}"
-         alt="{{ $item.Title }}" class="img-responsive" loading="lazy">
-  </a>
-  {{ end }}
+<div class="card col-4 repo">
   <div class="card-text">
-    <h3 style="margin-top: unset;"><a href="{{ $link }}" {{ $target | safeHTMLAttr }}>{{ $item.Title | markdownify | emojify }}</a></h3>
+    <h3 style="margin-top: unset;"><a href="{{ $link }}">{{ $item.Title | markdownify | emojify }}</a></h3>
 	{{ $icon := $item.Params.icon }}
 	{{ $pack := or $item.Params.icon_pack "fas" }}
   	{{ $pack_prefix := $pack }}
@@ -59,12 +41,5 @@
     </div>
     {{ end }}
 
-    {{ if $has_attachments }}
-    <div class="btn-links">
-      {{ partial "page_links" (dict "page" $item "is_list" 1) }}
-    </div>
-    {{ end }}
   </div>
 </div>
-
-
