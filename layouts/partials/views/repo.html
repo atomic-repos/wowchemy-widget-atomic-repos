@@ -14,7 +14,10 @@
 
 <div class="card col-4 repo">
   <div class="card-text">
-    <h3 style="margin-top: unset;"><a href="{{ $link }}">{{ $item.Title | markdownify | emojify }}</a></h3>
+    <h3 style="margin-top: unset;">
+		<a href="{{ $link }}">{{ $item.Title | markdownify | emojify }}</a>
+		<a href="https://github.com/{{ $item.Params.github_repo }}"><i style="float:inline-end" class="fab fa-github"></i></a>
+ 	</h3>
 	{{ $icon := $item.Params.icon }}
 	{{ $pack := or $item.Params.icon_pack "fas" }}
   	{{ $pack_prefix := $pack }}
@@ -33,7 +36,8 @@
 	{{- end -}}
     </div>
 	{{ end }}
-    <p class="section-subheading"><a href="https://github.com/{{ $item.Params.github_user }}">Author: {{ $item.Params.author | markdownify | emojify }}</a></p>
+    <p class="section-subheading">Author: <a href="https://github.com/{{ $item.Params.github_user }}">{{ $item.Params.author | markdownify | emojify }}</a>
+	</p>
 
     {{ with $summary }}
     <div class="article-style">
